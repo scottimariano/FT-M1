@@ -26,8 +26,6 @@ while (numero / 2 > 0) {
 return newArray.join('')
 }
 
-console.log(DecimalABinario(21))
-
 module.exports = {
   BinarioADecimal,
   DecimalABinario,
