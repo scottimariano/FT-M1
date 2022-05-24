@@ -151,7 +151,7 @@ function getFood(food) {
 
 getFood(false);
 ```
-undefined... ???
+undefined
 
 
 ### This
