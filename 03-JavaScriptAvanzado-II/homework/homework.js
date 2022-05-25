@@ -19,16 +19,22 @@ function counter() {
   otroContador()      // 2
   otroContador()      // 3
    */
+  let counter = 0
+  return function(){
+    counter ++
+    return counter
+  }
 }
 
+
+// const cb = function(x) {
+//   return x * 2;
+// };
 function cacheFunction(cb) {
   /*
   Ejercicio 2
-
   Tu tarea aquí es lograr, mediante un closure, que cacheFunction actúe como una memoria caché para el callback que recibe por parámetro (cb); es decir, que "recuerde" el resultado de cada operación que hace, de manera que, al realizar una operación por segunda vez, se pueda obtener el resultado de esa "memoria" sin tener que efectuar otra vez cálculos que ya se hicieron anteriormente.
-
   cacheFunction debe retornar una función. Esta función debe aceptar un argumento (arg) e invocar a cb con ese argumento; hecho eso, debe guardar el argumento junto con el resultado de la invocación (tip: usá un objeto donde cada propiedad sea el argumento, y su valor el resultado de la correspondiente invocación a cb) de manera que, la próxima vez que reciba el mismo argumento, no sea necesario volver a invocar a cb, porque el resultado estará guardado en la "memoria caché".
-
 
   Ejemplo:
   function square(n){
@@ -41,7 +47,24 @@ function cacheFunction(cb) {
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) 
 
   */
+  const resultados = {}
+  
+  return function(arg){
+    if (!resultados.hasOwnProperty(arg)){
+      resultados[arg] = cb(arg)
+      return resultados[arg]
+    } else {
+      return resultados[arg]
+    }
+  };
+
 }
+
+// let prueba = cacheFunction(cb)
+// console.log(prueba(2))
+// console.log(prueba(2))
+
+
 
 // Bind
 
@@ -70,6 +93,9 @@ function getNombre() {
 let getNombreInstructor;
 let getNombreAlumno;
 
+getNombreInstructor = getNombre.bind(instructor);
+getNombreAlumno = getNombre.bind(alumno);
+
 /*
   Ejercicio 4
   
@@ -83,6 +109,10 @@ function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
 let textoAsteriscos;
 let textoGuiones;
 let textoUnderscore;
+
+textoAsteriscos = crearCadena.bind(undefined, '*','*')
+textoGuiones = crearCadena.bind(undefined, '-','-')
+textoUnderscore = crearCadena.bind(undefined, '_','_')
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
