@@ -15,10 +15,17 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 */
 
 function nFactorial(n) {
+  if (n > -1 && n < 2) return 1;
+  else if (n <0) throw new Error ('No se puede obtener el factorial de numeros negativos.')
+  return n * nFactorial(n-1)
 }
 
 function nFibonacci(n) {
+  if (n <= 0 ) return 0;
+  if (n === 1) return 1;
+  return nFibonacci(n -1) + nFibonacci(n-2)
 }
+
 
 /*
 Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
@@ -29,8 +36,18 @@ Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde e
 Pueden utilizar class o función constructora.
 */
 
-function Queue() {
+// function Queue() {
 
+// }
+
+class Queue {
+  constructor(){
+    this.pila = []
+  }
+
+  enqueue(value) {this.pila.push(value)} 
+  dequeue() {return this.pila.shift()} 
+  size() {return this.pila.length} 
 }
 
 // No modifiquen nada debajo de esta linea

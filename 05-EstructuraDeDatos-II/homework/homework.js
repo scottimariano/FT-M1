@@ -1,5 +1,7 @@
 "use strict";
 
+const ConsoleLogger = require("@11ty/eleventy/src/Util/ConsoleLogger");
+
 /*
 Implementar la clase LinkedList, definiendo los siguientes métodos:
   - add: agrega un nuevo nodo al final de la lista;
@@ -11,9 +13,71 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+function LinkedList() {
+  this.head = null;
+}
 
-function Node(value) {}
+function Node(data) {
+  this.value = data;
+  this.next = null;
+}
+
+LinkedList.prototype.add = function (data) {
+  let node = new Node(data)
+  let current = this.head;
+  
+  if (!current){
+    this.head = node;
+    return node
+  }
+
+  while (current.next) {
+    current = current.next
+  }
+
+  current.next = node;
+  return node
+}
+
+LinkedList.prototype.remove = function() {
+  if (this.head === null) return null;
+  let current = this.head
+  if (!current.next) {
+    this.head = null
+    return current.value
+  }
+  
+  while (current.next.next){
+    current = current.next
+  }
+
+  let nodeToDelete = current.next
+  current.next = null
+
+  return nodeToDelete.value
+}
+
+LinkedList.prototype.search = function(value) {
+  
+  if(typeof value === 'string'){
+    let current = this.head
+    if (current.value === value) return current.value
+    while (current.next){
+      current = current.next
+      if (current.value === value) return current.value
+    }
+    return null
+  }
+  
+  let current = this.head
+  
+  if (value(current.value)) return current.value
+  while (current.next){
+    current = current.next
+    if (value(current.value)) return current.value
+  }
+  return 'No se ecuentra el valor buscado'
+}
 
 /*
 Implementar la clase HashTable.
@@ -30,7 +94,64 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+//function HashTable() {}
+class HashTable{
+  constructor(){
+    this.table = new Array(35)
+    this.numBuckets = this.table.length
+  }
+  hash(input){
+    let result = 0
+    for (let i = 0; i < input.length; i++) {
+        result += input.charCodeAt([i])
+    };
+    return result % this.numBuckets
+  }
+
+  set(key, value){
+    if (typeof key !== 'string'){
+      throw new TypeError('Keys must be strings')
+    }
+    let bucket = this.hash(key);
+    if (this.hasKey(key)){
+      this.table[bucket] = {[key]: value}
+      return 'Se ha agregado el elemento 1'
+    }
+    if (this.table[bucket]) {
+      let newArray = []
+      newArray.push(this.table[bucket])
+      newArray.push({[key]: value})
+      this.table[bucket] = newArray
+      return 'esta ocupado el bucket'
+    }
+
+    this.table[bucket] = {[key]: value}
+    return 'Se ha agregado el elemento ' + key
+  }
+
+  get(key){
+    let bucket = this.hash(key);
+    if (!Array.isArray(this.table[bucket])) {
+      return this.table[bucket][key]
+    } else {
+        for (let i = 0; i < this.table[bucket].length; i++) {
+          if (Object.keys(this.table[bucket][i]).includes(key)) {
+            return this.table[bucket][i][key]
+          }
+        }
+      }
+  }
+
+  hasKey(value){
+    for (let i = 0; i < this.table.length; i++) {
+      if (this.table[i]){
+        if(Object.keys(this.table[i]).includes(value)) return true
+      }
+    }
+    return false
+  }
+}
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------

@@ -32,8 +32,7 @@ Probá tu solución con el siguiente código:
 > t instanceof Triangle
 // true
 > Shape.prototype.isPrototypeOf(t);
-// true
-> t.getPerimeter();
+// true> t.getPerimeter();
 // 6
 > t.getType();
 // "Triangle"
