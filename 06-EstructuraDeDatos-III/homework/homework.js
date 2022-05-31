@@ -31,6 +31,7 @@ class BinarySearchTree{
       count ++
       this.right.size()
     }
+
     return count
   }
 
@@ -56,16 +57,16 @@ class BinarySearchTree{
     } else {
       if (value < this.value) {
         if (!this.left) return false
-        else return this.left.contains(value)
+        return this.left.contains(value)
       };
       if (value > this.value) {
         if (!this.right) return false
-        else return this.right.contains(value)
+        return this.right.contains(value)
       }
     }
   }
 
-  depthFirstForEach(cb,order = 'in-order'){
+  depthFirstForEach(cb, order = 'in-order'){
     if (order === 'in-order'){
       if (this.left) this.left.depthFirstForEach(cb,order)
       cb(this.value)
