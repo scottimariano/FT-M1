@@ -49,14 +49,10 @@ var countArray = function(array) {
 
 var countProps = function(obj) {
     // Tu código aca:
-    let count = 0
-    let propiedades = Object.keys(obj)
+    let count = Object.keys(obj).length
 
-    if (typeof obj === 'object') count += propiedades.length
-
-    for (let i = 0; i < propiedades.length; i++) {
-        if (Array.isArray(obj[propiedades[i]])) break
-        if (typeof obj[propiedades[i]] === 'object') count+= countProps(obj[propiedades[i]])
+    for (const key in obj) {
+        if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) count+= countProps(obj[key])
     }
 
     return count
@@ -88,7 +84,7 @@ LinkedList.prototype.changeNotNumbers = function(){
     let actual = this.head;
     //console.log(actual)
     while(actual){
-        if(isNaN(actual.value)) {
+        if(Number.isNaN(Number(actual.value))) {
             actual.value = 'Kiricocho';
             count ++
         }
@@ -122,9 +118,9 @@ LinkedList.prototype.changeNotNumbers = function(){
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
     let mergedQueued = new Queue();
-    while (queueOne.array.length || queueTwo.array.length){
-        if (queueOne.array.length) mergedQueued.array.push(queueOne.array.shift());
-        if (queueTwo.array.length)mergedQueued.array.push(queueTwo.array.shift());
+    while (queueOne.size() || queueTwo.size()){
+        if (queueOne.size()) mergedQueued.enqueue(queueOne.dequeue());
+        if (queueTwo.size()) mergedQueued.enqueue(queueTwo.dequeue());
     }
 
     return mergedQueued
@@ -167,8 +163,8 @@ var closureMult = function(multiplier) {
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
 
-    let result = 0;
-    result += this.value
+    let result = this.value
+    
     if (this.left) {
         result += this.left.sum()
     }
@@ -181,16 +177,16 @@ BinarySearchTree.prototype.sum = function() {
 
 }
 
-var bst = new BinarySearchTree(15);
-bst.insert(10);
-bst.insert(17);
-bst.insert(5);
-bst.insert(7);
-bst.insert(3);
-bst.insert(25);
+// var bst = new BinarySearchTree(15);
+// bst.insert(10);
+// bst.insert(17);
+// bst.insert(5);
+// bst.insert(7);
+// bst.insert(3);
+// bst.insert(25);
 
 //console.log(bst)
-console.log(bst.sum())
+//console.log(bst.sum())
 
 module.exports = {
     countArray,
